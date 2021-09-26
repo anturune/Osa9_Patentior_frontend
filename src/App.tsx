@@ -11,8 +11,9 @@ import PatientListPage from "./PatientListPage";
 
 const App = () => {
   const [, dispatch] = useStateValue();
+  
   React.useEffect(() => {
-    void axios.get<void>(`${apiBaseUrl}/ping`);
+    //void axios.get<void>(`${apiBaseUrl}/ping`);
 
     const fetchPatientList = async () => {
       try {
@@ -20,6 +21,7 @@ const App = () => {
           `${apiBaseUrl}/patients`
         );
         dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+        console.log('PATIENT LIST FRONTISSA', patientListFromApi);
       } catch (e) {
         console.error(e);
       }

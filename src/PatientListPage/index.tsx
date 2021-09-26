@@ -10,18 +10,19 @@ import HealthRatingBar from "../components/HealthRatingBar";
 import { useStateValue } from "../state";
 
 const PatientListPage = () => {
+  
   const [{ patients }, dispatch] = useStateValue();
-
+  
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
-
+  
   const openModal = (): void => setModalOpen(true);
 
   const closeModal = (): void => {
     setModalOpen(false);
     setError(undefined);
   };
-
+  console.log('PatientListPage index.tsx filessä',patients);
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const { data: newPatient } = await axios.post<Patient>(
@@ -31,8 +32,9 @@ const PatientListPage = () => {
       dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
-      console.error(e.response?.data || 'Unknown Error');
-      setError(e.response?.data?.error || 'Unknown error');
+      console.log('ERROR');
+      //console.error(e.response?.data || 'Unknown Error');
+      //setError(e.response?.data?.error || 'Unknown error');
     }
   };
 
