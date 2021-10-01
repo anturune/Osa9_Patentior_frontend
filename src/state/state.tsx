@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
+import { Icon } from "semantic-ui-react";
 import { Patient } from "../types";
 
 import { Action } from "./reducer";
@@ -11,6 +12,19 @@ const initialState: State = {
   patients: {}
 };
 
+export type IconType = {
+  gender: Icon
+};
+/*
+const initialIconState: IconType = {
+  gender: Icon: name='mars'
+};
+
+export const IconContext = createContext << Icon name = {} /> > ([
+  initialState,
+  () => initialState
+]);
+*/
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState

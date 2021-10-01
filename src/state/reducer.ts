@@ -3,15 +3,20 @@ import { Patient } from "../types";
 
 export type Action =
   | {
-      type: "SET_PATIENT_LIST";
-      payload: Patient[];
-    }
+    type: "SET_PATIENT_LIST";
+    payload: Patient[];
+  }
   | {
-      type: "ADD_PATIENT";
-      payload: Patient;
-    };
+    type: "ADD_PATIENT";
+    payload: Patient;
+  }
+  | {
+    type: "SHOW_SINGLE_PATIENT";
+    payload: Patient;
+  };
 
 export const reducer = (state: State, action: Action): State => {
+  console.log('STATE', state.patients, 'ACTION PAYLOAD', action.payload);
   switch (action.type) {
     case "SET_PATIENT_LIST":
       return {
@@ -25,6 +30,7 @@ export const reducer = (state: State, action: Action): State => {
         }
       };
     case "ADD_PATIENT":
+      console.log('TULEEKO ADD PATIENTTIIM');
       return {
         ...state,
         patients: {
@@ -32,6 +38,14 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
+
+    case "SHOW_SINGLE_PATIENT":
+      return {
+        ...state,
+        patients: { [action.payload.id]: action.payload }
+      };
+
+
     default:
       return state;
   }

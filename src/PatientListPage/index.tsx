@@ -2,27 +2,53 @@ import React from "react";
 import axios from "axios";
 import { Container, Table, Button } from "semantic-ui-react";
 
+
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
 import { useStateValue } from "../state";
+import { Link } from "react-router-dom";
+//import {setPatientList} from "../state/reducer";
+
+
 
 const PatientListPage = () => {
-  
+
   const [{ patients }, dispatch] = useStateValue();
-  
+
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
-  
+
   const openModal = (): void => setModalOpen(true);
 
   const closeModal = (): void => {
     setModalOpen(false);
     setError(undefined);
   };
-  console.log('PatientListPage index.tsx filessä',patients);
+  
+    //Aina kun tullaan tälle komponentille, niin päivitetään "state",
+    //kaikilla potilailla. Esim. kun palataan "Home" -napilla takaisin
+    //En keksinyt muuta ratkaisua
+    React.useEffect(() => {
+      const fetchPatientList = async () => {
+        try {
+          const { data: patientListFromApi } = await axios.get<Patient[]>(
+            `${apiBaseUrl}/patients`
+          );
+          dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+          //dispatch(setPatientList(patientListFromApi));
+          console.log('PATIENT LIST FRONTISSA', patientListFromApi);
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      void fetchPatientList();
+    }, [dispatch]);
+  
+  //console.log('PatientListPage index.tsx filessä', patients);
+  
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const { data: newPatient } = await axios.post<Patient>(
@@ -55,7 +81,9 @@ const PatientListPage = () => {
         <Table.Body>
           {Object.values(patients).map((patient: Patient) => (
             <Table.Row key={patient.id}>
-              <Table.Cell>{patient.name}</Table.Cell>
+              <Table.Cell>
+                <Link to={`/api/patients/${patient.id}`}>{patient.name}</Link>
+              </Table.Cell>
               <Table.Cell>{patient.gender}</Table.Cell>
               <Table.Cell>{patient.occupation}</Table.Cell>
               <Table.Cell>
