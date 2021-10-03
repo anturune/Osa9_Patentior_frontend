@@ -1,5 +1,6 @@
 import React from 'react';
-//import { Patient } from "../types";
+
+
 import { Container, Table } from "semantic-ui-react";
 import { useStateValue } from "../state";
 import axios from "axios";
@@ -8,7 +9,8 @@ import { apiBaseUrl } from "../constants";
 import { useParams } from "react-router-dom";
 //import { Icon } from "semantic-ui-react";
 import GendreSymbol from "../components/GendreSymbol";
-//import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { showSinglePatient } from "../state/reducer";
+
 
 
 
@@ -17,9 +19,8 @@ export const SinglePatientVieweri = () => {
     console.log('EKA LOCAL STORAGE', JSON.parse(localStorage.getItem('patient') || '{}'));
     //console.log('TULEEKO TÄNNEkkäänkö');
     const [{ patients }, dispatch] = useStateValue();
-
     //Haetaan yksittäinen potilas kannasta
-    //id "useParams":lla
+    //id "useParams":lla "url":sta
     const { id } = useParams<{ id: string }>();
     //Haetaan "effect hookilla" käyttäjä backendistä
     React.useEffect(() => {
@@ -27,8 +28,9 @@ export const SinglePatientVieweri = () => {
         const fetchSinglePatient = async () => {
             try {
                 const { data: singlePatient } = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
-                //console.log('SINGLE PATIENT', singlePatient);
-                dispatch({ type: "SHOW_SINGLE_PATIENT", payload: singlePatient });
+                console.log('SINGLE PATIENT', singlePatient);
+                //dispatch({ type: "SHOW_SINGLE_PATIENT", payload: singlePatient });
+                dispatch(showSinglePatient(singlePatient));
             } catch (e) {
                 console.error(e);
             }

@@ -1,21 +1,23 @@
 import React from "react";
-//import axios from "axios";
+import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
-/*
+
 import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
 import { Patient } from "./types";
-*/
+
+import { setPatientList } from "./state/reducer";
+
 import PatientListPage from "./PatientListPage";
 import { SinglePatientVieweri } from "./AddPatientModal/SinglePatientView";
 
 const App = () => {
   console.log('KÄYKÖ App KOPONENTISSA');
 
-  //const [, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   console.log('KÄYKÖ App KOPONENTISSA');
-  /*
+
   React.useEffect(() => {
     //void axios.get<void>(`${apiBaseUrl}/ping`);
     const fetchPatientList = async () => {
@@ -23,15 +25,16 @@ const App = () => {
         const { data: patientListFromApi } = await axios.get<Patient[]>(
           `${apiBaseUrl}/patients`
         );
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+        //dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
         //console.log('PATIENT LIST FRONTISSA', patientListFromApi);
+        dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
       }
     };
     void fetchPatientList();
   }, [dispatch]);
-*/
+
   return (
     <div className="App">
       <Router>

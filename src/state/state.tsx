@@ -3,6 +3,7 @@ import { Icon } from "semantic-ui-react";
 import { Patient } from "../types";
 
 import { Action } from "./reducer";
+//import { Action } from "./reducer";
 
 export type State = {
   patients: { [id: string]: Patient };
@@ -25,6 +26,18 @@ export const IconContext = createContext << Icon name = {} /> > ([
   () => initialState
 ]);
 */
+/*
+export const setPatientList = (patientList: Patient[]) => {
+  console.log('TULEEKO SETPATIENTLISTIIN');
+  return {
+    ...initialState,
+    patients: {
+      ...initialState.patients,
+      patientList
+    }
+  };
+*/
+
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState
