@@ -13,10 +13,10 @@ import PatientListPage from "./PatientListPage";
 import { SinglePatientVieweri } from "./AddPatientModal/SinglePatientView";
 
 const App = () => {
-  console.log('KÄYKÖ App KOPONENTISSA');
+  //console.log('KÄYKÖ App KOPONENTISSA');
 
   const [, dispatch] = useStateValue();
-  console.log('KÄYKÖ App KOPONENTISSA');
+  //console.log('KÄYKÖ App KOPONENTISSA');
 
   React.useEffect(() => {
     //void axios.get<void>(`${apiBaseUrl}/ping`);

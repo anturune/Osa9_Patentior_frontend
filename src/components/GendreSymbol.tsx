@@ -13,15 +13,15 @@ const GendreSymbol = ({ gendre }: IconProps) => {
 
     if (gendre === "female") {
         return (
-            <div >
+            <>
                 {<Icon name={femaleGendre} />}
-            </div>
+            </>
         );
     }
     return (
-        <div >
+        <>
             {<Icon name={maleGendre} />}
-        </div>);
+        </>);
 };
 
 export default GendreSymbol;

@@ -18,7 +18,7 @@ export type Action =
     };
 
 export const reducer = (state: State, action: Action): State => {
-    console.log('STATE', state.patients, 'ACTION PAYLOAD', action.data);
+    //console.log('STATE', state.patients, 'ACTION PAYLOAD', action.data);
     switch (action.type) {
         case "SET_PATIENT_LIST":
             return {
@@ -48,8 +48,6 @@ export const reducer = (state: State, action: Action): State => {
                 ...state,
                 patients: { [action.data.id]: action.data }
             };
-
-
         default:
             return state;
 
@@ -58,7 +56,7 @@ export const reducer = (state: State, action: Action): State => {
 };
 //Action-creator potilaslistan näyttämiseksi
 export const setPatientList = (patientList: Patient[]): Action => {
-    console.log('TULEEKO SETPATIENTLISTIIN');
+    //console.log('TULEEKO SETPATIENTLISTIIN');
     return {
         type: "SET_PATIENT_LIST",
         data: patientList
@@ -67,7 +65,7 @@ export const setPatientList = (patientList: Patient[]): Action => {
 };
 //Action creator yksittäisen potilaan näyttämiseksi
 export const showSinglePatient = (singlePatient: Patient): Action => {
-    console.log('TULEEKO SETPATIENTLISTIIN');
+    //console.log('TULEEKO SINGLE PATIENTTIIN');
     return {
         type: "SHOW_SINGLE_PATIENT",
         data: singlePatient

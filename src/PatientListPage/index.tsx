@@ -45,14 +45,14 @@ const PatientListPage = () => {
           );
           //dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
           dispatch(setPatientList(patientListFromApi));
-          console.log('PATIENT LIST FRONTISSA', patientListFromApi);
+          //console.log('PATIENT LIST FRONTISSA', patientListFromApi);
         } catch (e) {
           console.error(e);
         }
       };
       void fetchPatientList();
     }, [dispatch]);
-    console.log('PATIENTS', patients);
+    //console.log('PATIENTS', patients);
   
   //console.log('PatientListPage index.tsx filessä', patients);
   
