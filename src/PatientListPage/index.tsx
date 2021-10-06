@@ -14,12 +14,13 @@ import HealthRatingBar from "../components/HealthRatingBar";
 
 import { useStateValue } from "../state";
 import { Link } from "react-router-dom";
-import {setPatientList} from "../state/reducer";
+//import {setPatientList} from "../state/reducer";
 
 
 
 const PatientListPage = () => {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ patients }, dispatch] = useStateValue();
 
 
@@ -33,27 +34,6 @@ const PatientListPage = () => {
     setError(undefined);
   };
 
-  
-    //Aina kun tullaan tälle komponentille, niin päivitetään "state",
-    //kaikilla potilailla. Esim. kun palataan "Home" -napilla takaisin
-    //En keksinyt muuta ratkaisua
-    React.useEffect(() => {
-      const fetchPatientList = async () => {
-        try {
-          const { data: patientListFromApi } = await axios.get<Patient[]>(
-            `${apiBaseUrl}/patients`
-          );
-          //dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
-          dispatch(setPatientList(patientListFromApi));
-          //console.log('PATIENT LIST FRONTISSA', patientListFromApi);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-      void fetchPatientList();
-    }, [dispatch]);
-    //console.log('PATIENTS', patients);
-  
   //console.log('PatientListPage index.tsx filessä', patients);
   
   const submitNewPatient = async (values: PatientFormValues) => {
@@ -64,6 +44,7 @@ const PatientListPage = () => {
         values
       );
       console.log('NEWPATIENT', newPatient);
+      
       //dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
