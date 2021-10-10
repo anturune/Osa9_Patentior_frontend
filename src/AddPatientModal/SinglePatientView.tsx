@@ -2,29 +2,34 @@ import React from 'react';
 
 
 //import { Container, Table } from "semantic-ui-react";
-import { List } from "semantic-ui-react";
+import { List, Segment, Header, Icon } from "semantic-ui-react";
 import { useStateValue } from "../state";
 import axios from "axios";
-import { Patient, Entry } from "../types";
+import { Patient, Entry, HospitalEntry, OccupationalHealthcareEntry, HealthCheckEntry } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useParams } from "react-router-dom";
 //import { Icon } from "semantic-ui-react";
 import GendreSymbol from "../components/GendreSymbol";
 import { showSinglePatient } from "../state/reducer";
+import HealthRatingBar from "../components/HealthRatingBar";
+//import { assertTSNeverKeyword } from '@babel/types';
 
 //Määritellään entry propsin tyyppi
 type EntryProps = {
     entry: Entry[];
 };
+/*
 //Määritellään diagnoosikoodin tyyppi
 type DiagnosisCodesProps = {
     codes?: string[];
 };
+*/
+/*
 //Komponentti diagnoosikoodien renderöimiseksi
 const DiagnosisCodes = ({ codes }: DiagnosisCodesProps) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{ diagnoses }, dispatch] = useStateValue();
-    console.log('CODES',codes);
+    console.log('CODES', codes);
     console.log('DIAGNOSES', diagnoses);
     if (codes != undefined) {
         return (
@@ -36,7 +41,8 @@ const DiagnosisCodes = ({ codes }: DiagnosisCodesProps) => {
     }
     return null;
 };
-
+*/
+/*
 //Komponentti Entryn renderöimiseksi
 const Entries = ({ entry }: EntryProps) => {
     console.log('ENTRY', entry);
@@ -49,6 +55,93 @@ const Entries = ({ entry }: EntryProps) => {
                     </List.Item>)}
                 </List>
             </div>);
+    }
+    return null;
+};
+*/
+
+
+
+
+//Komponentti Entryn renderöimiseksi
+const Entries = ({ entry }: EntryProps) => {
+    console.log('ENTRY', entry);
+    if (entry != undefined) {
+        return (
+            <div>
+                <List>
+                    {entry.map((entry: Entry) => <List.Item key={entry.id}>
+                        <EntryDetails entry={entry}></EntryDetails>
+                    </List.Item>)}
+                </List>
+            </div>);
+    }
+    return null;
+};
+
+type HospitalEntryProps = {
+    hospitalityEntry: HospitalEntry
+};
+
+const HospitalEntriessit = (entry: HospitalEntryProps) => {
+    if (entry != undefined) {
+        return (
+            <Segment>
+                <Header as='h4'>{entry.hospitalityEntry.date} <Icon name='hospital'></Icon>
+                </Header>
+                <>{entry.hospitalityEntry.description}</>
+            </Segment>);
+    }
+    return null;
+};
+
+type OccupationalHealthcareProps = {
+    occupationalHealthcareEntry: OccupationalHealthcareEntry
+};
+
+const OccupationalHealthcareEntryt = (entry: OccupationalHealthcareProps) => {
+    if (entry != undefined) {
+        return (
+            <Segment>
+                <Header as='h4'>{entry.occupationalHealthcareEntry.date} <Icon name='stethoscope'></Icon>
+                </Header>
+                <>{entry.occupationalHealthcareEntry.description}</>
+
+            </Segment>);
+    }
+    return null;
+};
+
+type HealthCheckProps = {
+    healthCheckEntry: HealthCheckEntry
+};
+
+const HealthCheckEntryt = (entry: HealthCheckProps) => {
+    if (entry != undefined) {
+        return (
+            <Segment>
+                <Header as='h4'>{entry.healthCheckEntry.date} <Icon name='user md'></Icon>
+                </Header>
+                <>{entry.healthCheckEntry.description}</>
+                <HealthRatingBar showText={false} rating={entry.healthCheckEntry.healthCheckRating} />
+            </Segment>);
+    }
+    return null;
+};
+
+
+const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
+    if (entry != undefined || entry != null) {
+        switch (entry.type) {
+            case "Hospital":
+                return <HospitalEntriessit hospitalityEntry={entry}></HospitalEntriessit>;
+            case "OccupationalHealthcare":
+                return <OccupationalHealthcareEntryt occupationalHealthcareEntry={entry}></OccupationalHealthcareEntryt>;
+            case "HealthCheck":
+                return <HealthCheckEntryt healthCheckEntry={entry}></HealthCheckEntryt>;
+            default:
+                return null;
+        }
     }
     return null;
 };
@@ -97,6 +190,7 @@ export const SinglePatientVieweri = () => {
                     <br></br>
                     <List.Header as="h3">entries</List.Header>
                     <Entries entry={singlePatient.entries}></Entries>
+
                 </List.Item>
             </List.Item>
         </List>
