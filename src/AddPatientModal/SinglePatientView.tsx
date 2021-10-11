@@ -32,6 +32,7 @@ export const SinglePatientVieweri = () => {
         void fetchSinglePatient();
     }, [dispatch]);
 
+    console.log('SINGLE PATIENT FRONTISSA',singlePatient.entries);
     //Yksittäisen potilaan tietojen renderöimiseen
     return (<div className="App">
         <List>
