@@ -1,40 +1,26 @@
 import React from "react";
-
 import axios from "axios";
-
 import { Container, Table, Button } from "semantic-ui-react";
-
-
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
-
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
-
 import { useStateValue } from "../state";
 import { Link } from "react-router-dom";
-//import {setPatientList} from "../state/reducer";
-
-
 
 const PatientListPage = () => {
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ patients }, dispatch] = useStateValue();
-
-
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
-
+  
   const openModal = (): void => setModalOpen(true);
 
   const closeModal = (): void => {
     setModalOpen(false);
     setError(undefined);
   };
-
-  //console.log('PatientListPage index.tsx filessä', patients);
   
   const submitNewPatient = async (values: PatientFormValues) => {
     
@@ -44,8 +30,6 @@ const PatientListPage = () => {
         values
       );
       console.log('NEWPATIENT', newPatient);
-      
-      //dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
       console.log('ERROR');
@@ -54,8 +38,6 @@ const PatientListPage = () => {
     }
     
   };
-
-  
     return (
       <div className="App">
         <Container textAlign="center">
