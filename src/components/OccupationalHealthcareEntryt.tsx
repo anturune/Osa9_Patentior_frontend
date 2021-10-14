@@ -11,6 +11,7 @@ export type OccupationalHealthcareProps = {
 };
 //Renderöimiseen ks. backendistä patients datan sisältö "patients.ts"
 const OccupationalHealthcareEntryt = (entry: OccupationalHealthcareProps) => {
+    console.log('KÄYKÖ TÄÄLLÄ');
     if (entry != undefined) {
         return (
             <Segment>

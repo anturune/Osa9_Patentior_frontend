@@ -1,6 +1,7 @@
 import React from 'react';
 import { List } from "semantic-ui-react";
 import { useStateValue } from "../state";
+//import { Diagnosis } from '../types';
 
 //Määritellään diagnoosikoodin tyyppi
 export type DiagnosisCodesProps = {
@@ -9,8 +10,9 @@ export type DiagnosisCodesProps = {
 
 //Komponentti diagnoosikoodien renderöimiseksi
 const DiagnosisCodes = ({ codes }: DiagnosisCodesProps) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [{ diagnoses }, dispatch] = useStateValue();
+
+    const [{ diagnoses }] = useStateValue();
+
     console.log('CODES', codes);
     console.log('DIAGNOSES', diagnoses);
     if (codes != undefined) {

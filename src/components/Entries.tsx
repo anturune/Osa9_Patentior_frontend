@@ -13,7 +13,7 @@ type EntryProps = {
 
 //Komponentti Entryn renderöimiseksi
 const Entries = ({ entry }: EntryProps) => {
-    console.log('ENTRY', entry);
+    //console.log('ENTRY', entry);
     if (entry != undefined) {
         return (
             <div>

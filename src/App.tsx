@@ -32,7 +32,6 @@ const App = () => {
 
   //Kaikki diagnoosit stateen
   React.useEffect(() => {
-    
     const fetchDiagnosisList = async () => {
       try {
         const { data: diagnoseLista } = await axios.get<Diagnosis[]>(`${apiBaseUrl}/diagnoses`);

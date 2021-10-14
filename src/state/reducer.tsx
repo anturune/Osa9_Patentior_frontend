@@ -1,17 +1,17 @@
 import { State } from "./state";
-import { Patient, Diagnosis } from "../types";
+import { Patient, Diagnosis, Entry } from "../types";
 
 export type Action =
     | {
         type: "SET_PATIENT_LIST";
         data: Patient[];
     }
-    /*
+
     | {
         type: "ADD_PATIENT";
         data: Patient;
-    };
-    */
+    }
+
     | {
         type: "SHOW_SINGLE_PATIENT";
         data: Patient;
@@ -19,6 +19,11 @@ export type Action =
     | {
         type: "SET_DIAGNOSE_LIST";
         data: Diagnosis[];
+    }
+    | {
+        type: "ADD_NEW_ENTRY_PATIENTILLE";
+        data: Patient;
+        newEntry: Entry;
     };
 
 export const reducer = (state: State, action: Action): State => {
@@ -35,18 +40,17 @@ export const reducer = (state: State, action: Action): State => {
                     ...state.patients
                 }
             };
-        /*
-          case "ADD_PATIENT":
-              console.log('TULEEKO ADD PATIENTTIIM');
-              return {
-                  ...state,
-                  patients: {
-                      ...state.patients,
-                      //[action.payload.id]: action.payload
-                      [action.data.id]: action.data
-                  }
-              };
-         */
+        case "ADD_PATIENT":
+            console.log('TULEEKO ADD PATIENTTIIM');
+            return {
+                ...state,
+                patients: {
+                    ...state.patients,
+                    //[action.payload.id]: action.payload
+                    [action.data.id]: action.data
+                }
+            };
+
         case "SHOW_SINGLE_PATIENT":
             return {
                 ...state,
@@ -56,12 +60,20 @@ export const reducer = (state: State, action: Action): State => {
             return {
                 ...state,
                 diagnoses: {
-                    ...action.data.reduce(
-                        (memo, diagnose) => ({ ...memo, [diagnose.code]: diagnose }),
-                        {}
+                    ...action.data.reduce((memo, diagnose) => ({ ...memo, [diagnose.code]: diagnose }), {}
                     ),
                     ...state.diagnoses
                 }
+            };
+        case "ADD_NEW_ENTRY_PATIENTILLE":
+            console.log('TULEEKO CASELLE "DD_NEW_ENTRY_PATIENTILLE"');
+            console.log('NEW ENTRY', action.newEntry);
+            return {
+                ...state,
+                singlePatient: {
+                    ...state.singlePatient, entries: state.singlePatient.entries.concat(action.newEntry)
+                }
+
             };
         default:
             return state;
@@ -69,6 +81,26 @@ export const reducer = (state: State, action: Action): State => {
     }
 
 };
+
+//Action-creator uuden Entryn lisäämiseksi potilaalle
+export const addNewEntryPatientille = (patient: Patient, entry: Entry): Action => {
+    console.log('TULEEKO ADD_NEW_ENTRY_PATIENTILLE, PATIENT:', patient, 'ENTRY:', entry);
+    return {
+        type: "ADD_NEW_ENTRY_PATIENTILLE",
+        data: patient,
+        newEntry: entry
+    };
+};
+
+//Action-creator uuden potilaan lisäämiseksi
+export const addNewPatient = (patient: Patient): Action => {
+    console.log('TULEEKO addNewPatient', patient);
+    return {
+        type: "ADD_PATIENT",
+        data: patient
+    };
+};
+
 //Action-creator potilaslistan näyttämiseksi
 export const setPatientList = (patientList: Patient[]): Action => {
     //console.log('TULEEKO SETPATIENTLISTIIN');

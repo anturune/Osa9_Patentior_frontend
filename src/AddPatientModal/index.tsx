@@ -8,7 +8,7 @@ interface Props {
   onSubmit: (values: PatientFormValues) => void;
   error?: string;
 }
-
+console.log('TULEEKO ADDPATIENTMODALIIN');
 const AddPatientModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (
   <Modal open={modalOpen} onClose={onClose} centered={false} closeIcon>
     <Modal.Header>Add a new patient</Modal.Header>
