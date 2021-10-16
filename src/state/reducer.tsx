@@ -71,6 +71,7 @@ export const reducer = (state: State, action: Action): State => {
             return {
                 ...state,
                 singlePatient: {
+                    //Pilkotaan "singlePatient" -state ja päivitetään "singlePatientin" entriessit
                     ...state.singlePatient, entries: state.singlePatient.entries.concat(action.newEntry)
                 }
 
@@ -84,7 +85,7 @@ export const reducer = (state: State, action: Action): State => {
 
 //Action-creator uuden Entryn lisäämiseksi potilaalle
 export const addNewEntryPatientille = (patient: Patient, entry: Entry): Action => {
-    console.log('TULEEKO ADD_NEW_ENTRY_PATIENTILLE, PATIENT:', patient, 'ENTRY:', entry);
+    //console.log('TULEEKO ADD_NEW_ENTRY_PATIENTILLE, PATIENT:', patient, 'ENTRY:', entry);
     return {
         type: "ADD_NEW_ENTRY_PATIENTILLE",
         data: patient,
@@ -94,7 +95,7 @@ export const addNewEntryPatientille = (patient: Patient, entry: Entry): Action =
 
 //Action-creator uuden potilaan lisäämiseksi
 export const addNewPatient = (patient: Patient): Action => {
-    console.log('TULEEKO addNewPatient', patient);
+    //console.log('TULEEKO addNewPatient', patient);
     return {
         type: "ADD_PATIENT",
         data: patient
@@ -112,7 +113,7 @@ export const setPatientList = (patientList: Patient[]): Action => {
 
 //Action creator yksittäisen potilaan näyttämiseksi
 export const showSinglePatient = (singlePatient: Patient,): Action => {
-    console.log('TULEEKO SINGLE PATIENTTIIN');
+    //console.log('TULEEKO SINGLE PATIENTTIIN');
     return {
         type: "SHOW_SINGLE_PATIENT",
         data: singlePatient,

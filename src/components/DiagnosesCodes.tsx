@@ -13,8 +13,8 @@ const DiagnosisCodes = ({ codes }: DiagnosisCodesProps) => {
 
     const [{ diagnoses }] = useStateValue();
 
-    console.log('CODES', codes);
-    console.log('DIAGNOSES', diagnoses);
+    //console.log('CODES', codes);
+    //console.log('DIAGNOSES', diagnoses);
     if (codes != undefined) {
         return (
             <div>
