@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
-//formin krnttien validointiin
+//formin kenttien validointiin
 import * as Yup from 'yup';
 
 import { TextField, HealthCheckRatingOption, HealthCheckSelectField, DiagnosisSelection } from "./EntryFormField";

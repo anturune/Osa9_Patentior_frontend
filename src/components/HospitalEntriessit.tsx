@@ -14,9 +14,18 @@ const HospitalEntriessit = (entry: HospitalEntryProps) => {
             <Segment>
                 <Header as='h4'>{entry.hospitalityEntry.date} <Icon name='hospital'></Icon>
                 </Header>
-                <>{entry.hospitalityEntry.description}</>
-                <DiagnosisCodes codes={entry.hospitalityEntry.diagnosisCodes}></DiagnosisCodes>
-            </Segment>);
+                <>{entry.hospitalityEntry.description}</><br></br><br></br>
+
+                <b>Specialist:</b><br></br>
+                <>{entry.hospitalityEntry.specialist}</><br></br><br></br>
+
+                <DiagnosisCodes codes={entry.hospitalityEntry.diagnosisCodes}></DiagnosisCodes><br></br>
+
+                <b>Discharge:</b><br></br>
+                <>Date: {entry.hospitalityEntry.discharge.date}</><br></br>
+                <>Criteria: {entry.hospitalityEntry.discharge.criteria} </>
+
+            </Segment >);
     }
     return null;
 };

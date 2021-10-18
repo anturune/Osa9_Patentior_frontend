@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Segment } from 'semantic-ui-react';
-//import AddEntriesForm, { EntriesFormValues } from './AddEntryFormHealthcheck';
 import AddOccupationalHealthCareForm, { EntriesFormValuesOccupationalHealthcare } from './AddEntryFormOccupationalHealthcare';
 
 

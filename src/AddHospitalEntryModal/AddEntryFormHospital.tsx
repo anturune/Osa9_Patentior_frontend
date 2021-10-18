@@ -1,19 +1,19 @@
 import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
-//formin kenttien validointiin Yup
+//formin krnttien validointiin
 import * as Yup from 'yup';
 
-import { TextField, DiagnosisSelection } from "./OccupationalEntryFormField";
-import { OccupationalHealthcareEntry } from "../types";
+import { TextField, DiagnosisSelection } from "./HospitalEntryFormField";
+import { HospitalEntry } from "../types";
 import { useStateValue } from "../state";
 
 //Formin arvot ilman ID:tä. ID backendin vastuulla
-export type EntriesFormValuesOccupationalHealthcare = Omit<OccupationalHealthcareEntry, "id">;
+export type EntriesFormValuesHospital = Omit<HospitalEntry, "id">;
 
 //Propsit tietojen lähetykselle ja formin canceloimiselle
 interface Props {
-    onSubmit: (values: EntriesFormValuesOccupationalHealthcare) => void;
+    onSubmit: (values: EntriesFormValuesHospital) => void;
     onCancel: () => void;
 }
 
@@ -40,9 +40,20 @@ const EntryFillSchema = Yup.object().shape({
             Yup.ref('startDate'),
             "End date can't be before start date"
         )
+    }),
+    //Koska olio, niin "ali Yuppaus tarvitaan"
+    discharge: Yup.object().shape({
+        date: Yup.date()
+            .required("Field is required"),
+        criteria: Yup.string()
+            .min(2, 'Too Short!')
+            .max(20, 'Too Long!')
+            .required("Field is required")
     })
 
 });
+
+
 
 //Päivämäärän formaatin validointiin
 //formaatin tarkistuksen "kaava" kopioitu netistä eli tarkastaa
@@ -56,21 +67,20 @@ const validateDate = (value: string) => {
     return error;
 };
 //Patientin entryn lisäämiselle formi/lomake
-export const AddOccupationalHealthCareForm = ({ onSubmit, onCancel }: Props) => {
+export const AddHospitalForm = ({ onSubmit, onCancel }: Props) => {
     //Haetaan statesta kaikki diagnoosit
     const [{ diagnoses }] = useStateValue();
 
     return (
         <Formik
             initialValues={{
-                type: "OccupationalHealthcare",
+                type: "Hospital",
                 description: "",
                 date: "",
                 specialist: "",
-                employerName: "",
-                sickLeave: {
-                    startDate: "",
-                    endDate: ""
+                discharge: {
+                    date: "",
+                    criteria: ""
                 }
             }}
             //Validointiskeema, joka määritelty omassa komponentissa
@@ -91,9 +101,7 @@ export const AddOccupationalHealthCareForm = ({ onSubmit, onCancel }: Props) => 
                 if (!values.specialist) {
                     errors.specialist = requiredError;
                 }
-                if (!values.employerName) {
-                    errors.employerName = requiredError;
-                }
+
                 return errors;
             }}
         >
@@ -102,16 +110,16 @@ export const AddOccupationalHealthCareForm = ({ onSubmit, onCancel }: Props) => 
                     <Form className="form ui">
                         <Field
                             validate={validateDate}
-                            label="Sick Leave Start Date"
+                            label="Discharge date"
                             placeholder="YYYY-MM-DD"
-                            name="sickLeave.startDate"
+                            name="discharge.date"
                             component={TextField}
                         />{errors.date && touched.date}
                         <Field
-                            validate={validateDate}
-                            label="Sick Leave End Date"
-                            placeholder="YYYY-MM-DD"
-                            name="sickLeave.endDate"
+                            //validate={validateDate}
+                            label="Discharge criteria"
+                            placeholder="Discharge criteria"
+                            name="discharge.criteria"
                             component={TextField}
                         />{errors.date && touched.date}
                         <Field
@@ -141,12 +149,7 @@ export const AddOccupationalHealthCareForm = ({ onSubmit, onCancel }: Props) => 
                             setFieldTouched={setFieldTouched}
                             diagnoses={Object.values(diagnoses)}
                         />
-                        <Field
-                            label="Employer Name"
-                            placeholder="EmployerName"
-                            name="employerName"
-                            component={TextField}
-                        />{errors.employerName && touched.employerName}
+
                         <Grid>
                             <Grid.Column floated="left" width={5}>
                                 <Button type="button" onClick={onCancel} color="red">
@@ -171,4 +174,4 @@ export const AddOccupationalHealthCareForm = ({ onSubmit, onCancel }: Props) => 
     );
 };
 
-export default AddOccupationalHealthCareForm;
+export default AddHospitalForm;

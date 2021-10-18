@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import { SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic';
 
+//Uros/naaras -merkin propsien tyypit
 type IconProps = {
     gendre: string;
 };

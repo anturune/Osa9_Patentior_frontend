@@ -5,23 +5,22 @@ import { Field, Formik, Form } from "formik";
 import { TextField, SelectField, GenderOption } from "./FormField";
 import { Gender, Patient } from "../types";
 
-/*
- * use type Patient, but omit id and entries,
- * because those are irrelevant for new patient object.
- */
+//Uuden potilaan luomisesta pois "id" ja "entries", molemmat luodaan
+//backendissä
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
-
+//Propsien tyyppimäärittelyt
 interface Props {
   onSubmit: (values: PatientFormValues) => void;
   onCancel: () => void;
 }
-
+//Sukupuolten alasvetovalikon määrittely
 const genderOptions: GenderOption[] = [
   { value: Gender.Male, label: "Male" },
   { value: Gender.Female, label: "Female" },
   { value: Gender.Other, label: "Other" }
 ];
 
+//Uuden potilaan luomisen formi
 export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
   //console.log('AddPatientModal onSubmint',onSubmit);
   return (

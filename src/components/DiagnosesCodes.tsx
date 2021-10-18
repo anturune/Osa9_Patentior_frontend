@@ -1,7 +1,6 @@
 import React from 'react';
 import { List } from "semantic-ui-react";
 import { useStateValue } from "../state";
-//import { Diagnosis } from '../types';
 
 //Määritellään diagnoosikoodin tyyppi
 export type DiagnosisCodesProps = {
