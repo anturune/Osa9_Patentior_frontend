@@ -11,9 +11,10 @@ import { showSinglePatient, addNewEntryPatientille } from "../state/reducer";
 
 //Uutta entryä varten
 import AddEntryModal from "../AddEntryModal";
+import AddOccupationalHealthcareEntryModal from "../AddOccupationalEntryModal";
 //import { addNewPatient } from "../state/reducer";
-import { EntriesFormValues } from "../AddEntryModal/AddEntryForm";
-
+import { EntriesFormValues } from "../AddEntryModal/AddEntryFormHealthcheck";
+import { EntriesFormValuesOccupationalHealthcare } from "../AddOccupationalEntryModal/AddEntryFormOccupationalHealthcare";
 
 
 //Päivitetään "effect"-hookilla "state" yksittäisen potilaan ja diagnoosien osalta haetaan "useParams":lla 
@@ -21,19 +22,28 @@ import { EntriesFormValues } from "../AddEntryModal/AddEntryForm";
 export const SinglePatientVieweri = () => {
     //console.log('TULEEKO TÄNNEkkäänkö');
     const [{ singlePatient }, dispatch] = useStateValue();
-
-    const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-    const [error, setError] = React.useState<string | undefined>();
     //id "useParams":lla "url":sta
     const { id } = useParams<{ id: string }>();
 
+    //Healthcheck Entrylle oma lomake
+    const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string | undefined>();
     const openModal = (): void => setModalOpen(true);
-
     const closeModal = (): void => {
         setModalOpen(false);
-        setError(undefined); 
+        setError(undefined);
     };
 
+    //Occupational entrylle oma lomake
+    const [modalOpenOccupational, setModalOpenOccupational] = React.useState<boolean>(false);
+    const [errorOccupational, setErrorOccupational] = React.useState<string | undefined>();
+    const openModalOccupational = (): void => setModalOpenOccupational(true);
+    const closeModalOccupational = (): void => {
+        setModalOpenOccupational(false);
+        setErrorOccupational(undefined);
+    };
+
+    
     //console.log('SINGLE PATIENT singlepatientviewerissä', singlePatient.entries);
     //Haetaan "effect hookilla" käyttäjä backendistä
     React.useEffect(() => {
@@ -69,6 +79,25 @@ export const SinglePatientVieweri = () => {
         }
     };
 
+
+    const submitNewOccupationalHealthcareEntryForPatient = async (values: EntriesFormValuesOccupationalHealthcare) => {
+        console.log('ADD ENTRY FOR PATIENT', values);
+        try {
+            const { data: newEntryForPatient } = await axios.post<Entry>(
+                `${apiBaseUrl}/patients/${singlePatient.id}/entries`,
+                values
+            );
+            //Päivitetään patientin tilaa uuden entryn osalta
+            dispatch(addNewEntryPatientille(singlePatient, newEntryForPatient));
+            //console.log('NEWENTRYFORPATIENT', newEntryForPatient);
+            closeModalOccupational();
+        } catch (e) {
+            console.log('ERROR');
+            //console.error(e.response?.data || 'Unknown Error');
+            //setError(e.response?.data?.error || 'Unknown error');
+        }
+    };
+
     //Yksittäisen potilaan tietojen renderöimiseen
     return (<div className="App">
         <List>
@@ -91,7 +120,15 @@ export const SinglePatientVieweri = () => {
             error={error}
             onClose={closeModal}
         />
-        <Button onClick={() => openModal()}>Add New Entry for Patient</Button>
+        <AddOccupationalHealthcareEntryModal
+            modalOpen={modalOpenOccupational}
+            onSubmit={submitNewOccupationalHealthcareEntryForPatient}
+            error={errorOccupational}
+            onClose={closeModalOccupational}
+        />
+
+        <Button onClick={() => openModal()}>Healthcheck entry</Button>
+        <Button onClick={() => openModalOccupational()}>Occupational Healthcare entry</Button>
     </div>
     );
 };

@@ -66,12 +66,12 @@ export const reducer = (state: State, action: Action): State => {
                 }
             };
         case "ADD_NEW_ENTRY_PATIENTILLE":
-            console.log('TULEEKO CASELLE "DD_NEW_ENTRY_PATIENTILLE"');
+            console.log('TULEEKO CASELLE "ADD_NEW_ENTRY_PATIENTILLE"');
             console.log('NEW ENTRY', action.newEntry);
             return {
                 ...state,
                 singlePatient: {
-                    //Pilkotaan "singlePatient" -state ja päivitetään "singlePatientin" entriessit
+                    //Pilkotaan "singlePatient" -objecti ja päivitetään "singlePatientin" entriessit
                     ...state.singlePatient, entries: state.singlePatient.entries.concat(action.newEntry)
                 }
 
